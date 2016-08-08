@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.peng.duobao.ImagePaperAdapter;
+import com.peng.duobao.Adapter.ImagePaperAdapter;
 import com.peng.duobao.R;
 
 import java.util.ArrayList;
@@ -40,6 +40,7 @@ public class Doubao_Fragment extends Fragment {
      * 用于存放轮播效果图片
      */
     private List<String> list;
+    private final  static String PAGE1="http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/iphone6s.png";
 
     private List<View> catesViewList;
 
@@ -51,7 +52,7 @@ public class Doubao_Fragment extends Fragment {
 
     private ScheduledExecutorService scheduledExecutorService;
 
-    public static String url1 = "http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/iphone6s.png";
+    public static String url1 = PAGE1;
     public static String url2 = "http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/iphonese.png";
     public static String url3 = "http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/mobilecard.png";
 
@@ -70,7 +71,6 @@ public class Doubao_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_doubao, null);
         /**
          * viewpager bander图片轮播布局
