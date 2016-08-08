@@ -1,4 +1,4 @@
-package com.peng.duobao.main_fragment;
+package com.peng.duobao.Four_Fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,12 +12,12 @@ import com.peng.duobao.R;
 /**
  * Created by Peng on 2016/8/4.
  */
-public class List_Fragment extends Fragment {
+public class Me_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view =inflater.inflate(R.layout.fragment_list,null);
+        View view =inflater.inflate(R.layout.fragment_me,null);
         return  view;
     }
 }

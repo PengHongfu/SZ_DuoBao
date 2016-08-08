@@ -15,6 +15,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       <!-- <receiver android:name=".MainActivity$broadreciver">
+            <intent-filter android:priority="100">
+                <action android:name="Four_Fragment"></action>
+            </intent-filter>
+        </receiver>-->
+        <activity android:name=".Activity_FirstFragment.TestActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

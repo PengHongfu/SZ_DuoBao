@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:orientation="horizontal">
+
     <FrameLayout
         android:background="@drawable/boder_bottom"
         android:id="@+id/bottom_fragment"

@@ -37,6 +37,8 @@
             android:text="你的清单空空如也"
             android:textColor="@color/color_grey2"/>
         <Button
+
+            android:id="@+id/btn_goduobao"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
