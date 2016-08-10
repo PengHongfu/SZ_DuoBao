@@ -13,6 +13,8 @@ import com.bumptech.glide.Glide;
 import com.peng.duobao.Activity_FirstFragment.TestActivity;
 import com.peng.duobao.MainActivity;
 import com.peng.duobao.R;
+import com.peng.duobao.WebView.Register_Web;
+import com.peng.duobao.WebView.WebActivity;
 
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class ImagePaperAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         View view = viewList.get(position);
-        ViewParent viewParent = view.getParent();
+        //ViewParent viewParent = view.getParent();
         ImageView imageView = (ImageView) view.findViewById(R.id.img);
 
         Glide.with(context).load(list.get(position)).into(imageView);
@@ -60,7 +62,7 @@ public class ImagePaperAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
 
-                Intent intent =new Intent(MainActivity.mainActivity,TestActivity.class);
+                Intent intent =new Intent(context,WebActivity.class);
                 MainActivity.mainActivity.startActivity(intent);
 
                 Toast.makeText(MainActivity.mainActivity,"你点击的是第"+position+"个页面",Toast.LENGTH_SHORT).show();

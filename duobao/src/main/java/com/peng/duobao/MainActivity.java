@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.peng.duobao.Four_Fragment.Discover_Fragment;
 import com.peng.duobao.Four_Fragment.Doubao_Fragment;
@@ -24,6 +26,10 @@ public class MainActivity extends FragmentActivity {
     public static MainActivity mainActivity;
     private ViewPager mViewpager;
     private FragmentPagerAdapter mAdapter;
+
+    private boolean isFirst = true;
+    private boolean isInIndex = true;
+    private long first, second;
     /**
      * 存放Fragment的集合
      */
@@ -254,6 +260,29 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        onDoubleBackExist(keyCode, event);
+        return true;
+    }
+    /**
+     * 双击退出
+     */
+    private void onDoubleBackExist(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (isFirst) {
+                first = System.currentTimeMillis();
+                Toast.makeText(this, "Click again to exit.", Toast.LENGTH_SHORT).show();
+                isFirst = false;
+            } else {
+                isFirst = true;
+                second = System.currentTimeMillis();
+                if (second - first < 2000) {
+                    finish();
+                }
+            }
+        }
     }
 }
 

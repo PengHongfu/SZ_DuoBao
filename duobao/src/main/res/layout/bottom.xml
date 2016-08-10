@@ -32,6 +32,7 @@
                 android:drawableTop="@drawable/selected_ic_home"
                 android:gravity="center_horizontal|bottom"
                 android:text="夺宝"
+                android:textColor="@drawable/selected_rg_rb_text"
                 android:textSize="12sp" />
 
             <RadioButton
@@ -44,6 +45,7 @@
                 android:drawableTop="@drawable/selected_ic_find"
                 android:gravity="center_horizontal|bottom"
                 android:text="发现"
+                android:textColor="@drawable/selected_rg_rb_text"
                 android:textSize="12sp" />
 
             <RadioButton
@@ -56,6 +58,7 @@
                 android:drawableTop="@drawable/selected_ic_listing"
                 android:gravity="center_horizontal|bottom"
                 android:text="清单"
+                android:textColor="@drawable/selected_rg_rb_text"
                 android:textSize="12sp" />
 
             <RadioButton
@@ -68,6 +71,7 @@
                 android:drawableTop="@drawable/selected_ic_user"
                 android:gravity="center_horizontal|bottom"
                 android:text="我的"
+                android:textColor="@drawable/selected_rg_rb_text"
                 android:textSize="12sp" />
         </RadioGroup>
     </FrameLayout>

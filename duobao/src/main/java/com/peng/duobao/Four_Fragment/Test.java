@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
 
     private ImageView image;
     private View item ;
-    private MyAdapter adapter ;
+    private MyGridAdapter adapter ;
     private ImageView[] indicator_imgs = new ImageView[7];//存放引到图片数组
 
 
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
         }
 
         //创建适配器， 把组装完的组件传递进去
-        adapter = new MyAdapter(list);
+        adapter = new MyGridAdapter(list);
         view_pager.setAdapter(adapter);
 
         //绑定动作监听器：如翻页的动画
@@ -140,14 +140,14 @@ public class MainActivity extends Activity {
      * 适配器，负责装配 、销毁  数据  和  组件 。
      *//*
 
-    private class MyAdapter extends PagerAdapter {
+    private class MyGridAdapter extends PagerAdapter {
 
         private List<View> mList;
 
 
         private AsyncImageLoader asyncImageLoader;
 
-        public MyAdapter(List<View> list) {
+        public MyGridAdapter(List<View> list) {
             mList = list;
             asyncImageLoader = new AsyncImageLoader();
         }
@@ -242,7 +242,7 @@ public class MainActivity extends Activity {
         public void onPageScrollStateChanged(int state) {
             // TODO Auto-generated method stub
             if (state == 0) {
-                //new MyAdapter(null).notifyDataSetChanged();
+                //new MyGridAdapter(null).notifyDataSetChanged();
             }
         }
 

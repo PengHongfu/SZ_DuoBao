@@ -7,15 +7,30 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.peng.duobao.Adapter.ImagePaperAdapter;
+import com.peng.duobao.Adapter.MyGridAdapter;
+import com.peng.duobao.Goods_Fragement.Goods_five_Fragment;
+import com.peng.duobao.Goods_Fragement.Goods_four_Fragment;
+import com.peng.duobao.Goods_Fragement.Goods_one_Fragment;
+import com.peng.duobao.Goods_Fragement.Goods_three_Fragment;
+import com.peng.duobao.Goods_Fragement.Goods_two_Fragment;
 import com.peng.duobao.R;
 
 import java.util.ArrayList;
@@ -40,7 +55,6 @@ public class Doubao_Fragment extends Fragment {
      * 用于存放轮播效果图片
      */
     private List<String> list;
-    private final  static String PAGE1="http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/iphone6s.png";
 
     private List<View> catesViewList;
 
@@ -52,9 +66,20 @@ public class Doubao_Fragment extends Fragment {
 
     private ScheduledExecutorService scheduledExecutorService;
 
-    public static String url1 = PAGE1;
+    public static String url1 = "http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/iphone6s.png";
     public static String url2 = "http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/iphonese.png";
     public static String url3 = "http://dmmnm2aswnvy2.cloudfront.net/snatch/template/img/mobilecard.png";
+
+    private View view;//页面布局view
+
+    private FrameLayout goodsfragment;
+    private Goods_one_Fragment onefragment;
+    private Goods_two_Fragment twofragment;
+    private Goods_three_Fragment threefragment;
+    private Goods_four_Fragment fourfragment;
+    private Goods_five_Fragment fivefragment;
+    private RadioGroup goodsRG;
+
 
     private Handler handler = new Handler() {
 
@@ -71,7 +96,8 @@ public class Doubao_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_doubao, null);
+        view = inflater.inflate(R.layout.fragment_doubao, null);
+
         /**
          * viewpager bander图片轮播布局
          * 图片底部圆点布局
@@ -88,8 +114,136 @@ public class Doubao_Fragment extends Fragment {
         if (isAutoPlay) {
             startPlay();
         }
+
+        goodsFragmentinitView();
+
         return view;
     }
+
+    /**
+     * 商品tab 按钮的点击事件
+     */
+    private void goodsFragmentinitView() {
+        goodsfragment = (FrameLayout) view.findViewById(R.id.doubao_goods_fragment);
+        RadioButton rbone = (RadioButton) view.findViewById(R.id.rb_goods_one);
+        RadioButton rbtwo = (RadioButton) view.findViewById(R.id.rb_goods_two);
+        RadioButton rbthree = (RadioButton) view.findViewById(R.id.rb_goods_three);
+        RadioButton rbfour = (RadioButton) view.findViewById(R.id.rb_goods_four);
+        RadioButton rbfive = (RadioButton) view.findViewById(R.id.rb_goods_five);
+
+        onefragment = new Goods_one_Fragment();
+        /**
+         * 加这个就不会加载这个布局 twofragment = new Goods_two_Fragment();
+         */
+
+        getChildFragmentManager().beginTransaction().replace(R.id.doubao_goods_fragment, onefragment).commit();
+
+        /**
+         * RadioGroup的点击事件
+         */
+        goodsRG = (RadioGroup) view.findViewById(R.id.goods_list_rg);
+        goodsRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                FragmentManager goodsfragmentManager = getChildFragmentManager();
+                FragmentTransaction beginTrasaction = goodsfragmentManager.beginTransaction();
+                switch (checkedId) {
+                    case R.id.rb_goods_one:
+                        if (onefragment == null) {
+                            onefragment = new Goods_one_Fragment();
+                            beginTrasaction.add(R.id.doubao_goods_fragment, onefragment);
+                        }
+                        if (twofragment != null)
+                            beginTrasaction.hide(twofragment);
+                        if (threefragment != null)
+                            beginTrasaction.hide(threefragment);
+                        if (fourfragment != null)
+                            beginTrasaction.hide(fourfragment);
+                        if (fivefragment != null)
+                            beginTrasaction.hide(fivefragment);
+
+                        beginTrasaction.show(onefragment);
+                        beginTrasaction.commit();
+                        break;
+
+                    case R.id.rb_goods_two:
+                        if (twofragment == null) {
+                            twofragment = new Goods_two_Fragment();
+                            beginTrasaction.add(R.id.doubao_goods_fragment, twofragment);
+                        }
+                        if (onefragment != null)
+                            beginTrasaction.hide(onefragment);
+                        if (threefragment != null)
+                            beginTrasaction.hide(threefragment);
+                        if (fourfragment != null)
+                            beginTrasaction.hide(fourfragment);
+                        if (fivefragment != null)
+                            beginTrasaction.hide(fivefragment);
+
+                        beginTrasaction.show(twofragment);
+                        beginTrasaction.commit();
+
+                        break;
+                    case R.id.rb_goods_three:
+                        if (threefragment == null) {
+                            threefragment = new Goods_three_Fragment();
+                            beginTrasaction.add(R.id.doubao_goods_fragment, threefragment);
+                        }
+                        if (twofragment != null)
+                            beginTrasaction.hide(twofragment);
+                        if (onefragment != null)
+                            beginTrasaction.hide(onefragment);
+                        if (fourfragment != null)
+                            beginTrasaction.hide(fourfragment);
+                        if (fivefragment != null)
+                            beginTrasaction.hide(fivefragment);
+
+                        beginTrasaction.show(threefragment);
+                        beginTrasaction.commit();
+                        break;
+
+                    case R.id.rb_goods_four:
+                        if (fourfragment == null) {
+                            fourfragment = new Goods_four_Fragment();
+                            beginTrasaction.add(R.id.doubao_goods_fragment, fourfragment);
+                        }
+                        if (twofragment != null)
+                            beginTrasaction.hide(twofragment);
+                        if (onefragment != null)
+                            beginTrasaction.hide(onefragment);
+                        if (threefragment != null)
+                            beginTrasaction.hide(threefragment);
+                        if (fivefragment != null)
+                            beginTrasaction.hide(fivefragment);
+                        beginTrasaction.show(fourfragment);
+                        beginTrasaction.commit();
+                        break;
+
+                    case R.id.rb_goods_five:
+                        if (fivefragment == null) {
+                            fivefragment = new Goods_five_Fragment();
+                            beginTrasaction.add(R.id.doubao_goods_fragment, fivefragment);
+                        }
+                        if (twofragment != null)
+                            beginTrasaction.hide(twofragment);
+                        if (onefragment != null)
+                            beginTrasaction.hide(onefragment);
+                        if (threefragment != null)
+                            beginTrasaction.hide(threefragment);
+                        if (fourfragment != null)
+                            beginTrasaction.hide(fourfragment);
+                        beginTrasaction.show(fivefragment);
+                        beginTrasaction.commit();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+
+    }
+
 
     public void initView() {
         /**
@@ -98,7 +252,7 @@ public class Doubao_Fragment extends Fragment {
          */
         dotViewList = new ArrayList<ImageView>();
         list = new ArrayList<>();
-        catesViewList =new ArrayList<>();
+        catesViewList = new ArrayList<>();
         list.add(url1);
         list.add(url2);
         list.add(url3);
@@ -146,6 +300,7 @@ public class Doubao_Fragment extends Fragment {
          */
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
+
                 View view = LayoutInflater.from(getActivity()).inflate(R.layout.duobao_bander, null);
                 catesViewList.add(view);
             }
@@ -153,8 +308,11 @@ public class Doubao_Fragment extends Fragment {
 
         /**
          * 设置图片轮播适配器
+         * catesViewList 存放图片显示布局的view
+         *
+         * list
          */
-        ImagePaperAdapter adapter = new ImagePaperAdapter(getActivity(),catesViewList, list);
+        ImagePaperAdapter adapter = new ImagePaperAdapter(getActivity(), catesViewList, list);
 
         mviewPager.setAdapter(adapter);
         mviewPager.setCurrentItem(0);
@@ -169,6 +327,7 @@ public class Doubao_Fragment extends Fragment {
         scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 2, 5, TimeUnit.SECONDS);
         //根据他的参数说明，第一个参数是执行的任务，第二个参数是第一次执行的间隔，第三个参数是执行任务的周期；
     }
+
 
     /**
      * 执行轮播图切换任务

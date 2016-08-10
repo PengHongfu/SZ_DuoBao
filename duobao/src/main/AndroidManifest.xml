@@ -21,6 +21,8 @@
             </intent-filter>
         </receiver>-->
         <activity android:name=".Activity_FirstFragment.TestActivity"></activity>
+        <activity android:name=".WebView.WebActivity"></activity>
+        <activity android:name=".WebView.Register_Web"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
