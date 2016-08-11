@@ -1,5 +1,7 @@
 package com.peng.duobao.Four_Fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -42,5 +44,71 @@ public class List_Fragment extends Fragment {
             }
         });
         return  view;
+    }
+    @Override
+    public void onAttach(Context context) {
+        System.out.println("list--onAttach");
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        System.out.println("list--onCreate");
+        super.onCreate(savedInstanceState);
+    }
+    //当在onCreateView里的view 初始化了
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        System.out.println("list--onActivityCreated");
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        System.out.println("list--onStart");
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        System.out.println("list--onResume");
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        System.out.println("list--onPause");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        System.out.println("list--onStop");
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        System.out.println("list--onDestroyView");
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        System.out.println("list--onDestroy");
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        System.out.println("list--onDetach");
+        super.onDetach();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        System.out.println("list--onAttach");
+        super.onAttach(activity);
     }
 }

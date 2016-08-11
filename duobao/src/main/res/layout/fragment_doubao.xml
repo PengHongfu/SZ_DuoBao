@@ -64,11 +64,6 @@
                 android:layout_height="10dp"
                 android:background="#EEEEEE"></LinearLayout>
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
-
                 <RadioGroup
                     android:id="@+id/goods_list_rg"
                     android:layout_width="match_parent"
@@ -79,7 +74,7 @@
                     android:paddingTop="4dp">
 
                     <RadioButton
-
+                        android:layout_weight="1"
                         android:id="@+id/rb_goods_one"
                         android:layout_width="90dp"
                         android:layout_height="match_parent"
@@ -88,52 +83,48 @@
                         android:paddingBottom="5dp"
                         android:gravity="center_horizontal|bottom"
                         android:text="人气"
+                        android:textColor="@drawable/selected_rg_rb_text"
                         android:textSize="16sp" />
 
                     <RadioButton
+                        android:layout_weight="1"
                         android:id="@+id/rb_goods_two"
                         android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:paddingBottom="5dp"
                         android:gravity="center_horizontal|bottom"
                         android:text="最新"
+                        android:textColor="@drawable/selected_rg_rb_text"
                         android:textSize="16sp" />
 
                     <RadioButton
+                        android:layout_weight="1"
                         android:id="@+id/rb_goods_three"
                         android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:paddingBottom="5dp"
                         android:gravity="center_horizontal|bottom"
                         android:text="进度"
+                        android:textColor="@drawable/selected_rg_rb_text"
                         android:textSize="16sp" />
 
                     <RadioButton
+                        android:layout_weight="1"
                         android:id="@+id/rb_goods_four"
                         android:layout_width="90dp"
                         android:layout_height="match_parent"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:paddingBottom="5dp"
                         android:gravity="center_horizontal|bottom"
                         android:text="总需人数"
-                        android:textSize="16sp" />
-                    <RadioButton
-                        android:id="@+id/rb_goods_five"
-                        android:layout_width="90dp"
-                        android:layout_height="match_parent"
-                        android:button="@null"
-                        android:checked="true"
-                        android:paddingBottom="5dp"
-                        android:gravity="center_horizontal|bottom"
-                        android:text="其他"
+                        android:textColor="@drawable/selected_rg_rb_text"
                         android:textSize="16sp" />
                 </RadioGroup>
-            </HorizontalScrollView>
 
             <FrameLayout
                 android:id="@+id/doubao_goods_fragment"

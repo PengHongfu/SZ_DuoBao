@@ -13,26 +13,24 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.peng.duobao.Adapter.ImagePaperAdapter;
-import com.peng.duobao.Adapter.MyGridAdapter;
-import com.peng.duobao.Goods_Fragement.Goods_five_Fragment;
 import com.peng.duobao.Goods_Fragement.Goods_four_Fragment;
 import com.peng.duobao.Goods_Fragement.Goods_one_Fragment;
 import com.peng.duobao.Goods_Fragement.Goods_three_Fragment;
 import com.peng.duobao.Goods_Fragement.Goods_two_Fragment;
 import com.peng.duobao.R;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -43,9 +41,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Peng on 2016/8/7.
  */
 public class Doubao_Fragment extends Fragment {
-    /*private LayoutInflater inflater;我用的是打气筒的第一种方式
-   *view1 = View.inflate(getApplicationContext(), R.layout.item, null);
-   * */
+
     private ViewPager mviewPager;
     /**
      * 用于小圆点图片
@@ -77,7 +73,6 @@ public class Doubao_Fragment extends Fragment {
     private Goods_two_Fragment twofragment;
     private Goods_three_Fragment threefragment;
     private Goods_four_Fragment fourfragment;
-    private Goods_five_Fragment fivefragment;
     private RadioGroup goodsRG;
 
 
@@ -93,11 +88,11 @@ public class Doubao_Fragment extends Fragment {
         }
     };
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_doubao, null);
-
         /**
          * viewpager bander图片轮播布局
          * 图片底部圆点布局
@@ -124,12 +119,13 @@ public class Doubao_Fragment extends Fragment {
      * 商品tab 按钮的点击事件
      */
     private void goodsFragmentinitView() {
+
         goodsfragment = (FrameLayout) view.findViewById(R.id.doubao_goods_fragment);
+
         RadioButton rbone = (RadioButton) view.findViewById(R.id.rb_goods_one);
         RadioButton rbtwo = (RadioButton) view.findViewById(R.id.rb_goods_two);
         RadioButton rbthree = (RadioButton) view.findViewById(R.id.rb_goods_three);
         RadioButton rbfour = (RadioButton) view.findViewById(R.id.rb_goods_four);
-        RadioButton rbfive = (RadioButton) view.findViewById(R.id.rb_goods_five);
 
         onefragment = new Goods_one_Fragment();
         /**
@@ -145,13 +141,16 @@ public class Doubao_Fragment extends Fragment {
         goodsRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+
                 FragmentManager goodsfragmentManager = getChildFragmentManager();
                 FragmentTransaction beginTrasaction = goodsfragmentManager.beginTransaction();
+
+
                 switch (checkedId) {
                     case R.id.rb_goods_one:
                         if (onefragment == null) {
                             onefragment = new Goods_one_Fragment();
-                            beginTrasaction.add(R.id.doubao_goods_fragment, onefragment);
+                            beginTrasaction.add(R.id.doubao_goods_fragment, onefragment, "one");
                         }
                         if (twofragment != null)
                             beginTrasaction.hide(twofragment);
@@ -159,17 +158,18 @@ public class Doubao_Fragment extends Fragment {
                             beginTrasaction.hide(threefragment);
                         if (fourfragment != null)
                             beginTrasaction.hide(fourfragment);
-                        if (fivefragment != null)
-                            beginTrasaction.hide(fivefragment);
 
                         beginTrasaction.show(onefragment);
                         beginTrasaction.commit();
+
                         break;
 
                     case R.id.rb_goods_two:
                         if (twofragment == null) {
                             twofragment = new Goods_two_Fragment();
-                            beginTrasaction.add(R.id.doubao_goods_fragment, twofragment);
+                            beginTrasaction.add(R.id.doubao_goods_fragment, twofragment, "two");
+                            Log.d("peng1", "add----two");
+
                         }
                         if (onefragment != null)
                             beginTrasaction.hide(onefragment);
@@ -177,17 +177,18 @@ public class Doubao_Fragment extends Fragment {
                             beginTrasaction.hide(threefragment);
                         if (fourfragment != null)
                             beginTrasaction.hide(fourfragment);
-                        if (fivefragment != null)
-                            beginTrasaction.hide(fivefragment);
 
                         beginTrasaction.show(twofragment);
+                        Log.d("peng1", twofragment.toString());
+                        Log.d("peng1", "show----two");
                         beginTrasaction.commit();
+
 
                         break;
                     case R.id.rb_goods_three:
                         if (threefragment == null) {
                             threefragment = new Goods_three_Fragment();
-                            beginTrasaction.add(R.id.doubao_goods_fragment, threefragment);
+                            beginTrasaction.add(R.id.doubao_goods_fragment, threefragment, "three");
                         }
                         if (twofragment != null)
                             beginTrasaction.hide(twofragment);
@@ -195,17 +196,16 @@ public class Doubao_Fragment extends Fragment {
                             beginTrasaction.hide(onefragment);
                         if (fourfragment != null)
                             beginTrasaction.hide(fourfragment);
-                        if (fivefragment != null)
-                            beginTrasaction.hide(fivefragment);
 
                         beginTrasaction.show(threefragment);
                         beginTrasaction.commit();
+
                         break;
 
                     case R.id.rb_goods_four:
                         if (fourfragment == null) {
                             fourfragment = new Goods_four_Fragment();
-                            beginTrasaction.add(R.id.doubao_goods_fragment, fourfragment);
+                            beginTrasaction.add(R.id.doubao_goods_fragment, fourfragment, "four");
                         }
                         if (twofragment != null)
                             beginTrasaction.hide(twofragment);
@@ -213,28 +213,11 @@ public class Doubao_Fragment extends Fragment {
                             beginTrasaction.hide(onefragment);
                         if (threefragment != null)
                             beginTrasaction.hide(threefragment);
-                        if (fivefragment != null)
-                            beginTrasaction.hide(fivefragment);
                         beginTrasaction.show(fourfragment);
                         beginTrasaction.commit();
+
                         break;
 
-                    case R.id.rb_goods_five:
-                        if (fivefragment == null) {
-                            fivefragment = new Goods_five_Fragment();
-                            beginTrasaction.add(R.id.doubao_goods_fragment, fivefragment);
-                        }
-                        if (twofragment != null)
-                            beginTrasaction.hide(twofragment);
-                        if (onefragment != null)
-                            beginTrasaction.hide(onefragment);
-                        if (threefragment != null)
-                            beginTrasaction.hide(threefragment);
-                        if (fourfragment != null)
-                            beginTrasaction.hide(fourfragment);
-                        beginTrasaction.show(fivefragment);
-                        beginTrasaction.commit();
-                        break;
                     default:
                         break;
                 }
@@ -243,7 +226,6 @@ public class Doubao_Fragment extends Fragment {
 
 
     }
-
 
     public void initView() {
         /**
@@ -329,6 +311,8 @@ public class Doubao_Fragment extends Fragment {
     }
 
 
+
+
     /**
      * 执行轮播图切换任务
      */
@@ -399,8 +383,7 @@ public class Doubao_Fragment extends Fragment {
         }
 
     }
-
-
+    
     @Override
     public void onAttach(Context context) {
         System.out.println("onAttach");
@@ -417,6 +400,7 @@ public class Doubao_Fragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         System.out.println("onActivityCreated");
+
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -441,13 +425,13 @@ public class Doubao_Fragment extends Fragment {
     @Override
     public void onStop() {
         System.out.println("onStop");
-        scheduledExecutorService.shutdown();
         super.onStop();
     }
 
     @Override
     public void onDestroyView() {
         System.out.println("onDestroyView");
+
         super.onDestroyView();
     }
 
@@ -459,14 +443,14 @@ public class Doubao_Fragment extends Fragment {
     }
 
     @Override
-    public void onDetach() {
-        System.out.println("onDetach");
-        super.onDetach();
-    }
-
-    @Override
     public void onAttach(Activity activity) {
         System.out.println("onAttach");
         super.onAttach(activity);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
     }
 }
