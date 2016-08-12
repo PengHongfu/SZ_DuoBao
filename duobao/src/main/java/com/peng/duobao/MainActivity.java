@@ -81,7 +81,6 @@ public class MainActivity extends FragmentActivity {
          * 销毁注册的广播
          */
         unregisterReceiver(reciver);
-       FragmentManager fragmentManager = getSupportFragmentManager();
         super.onDestroy();
 
     }
@@ -103,7 +102,24 @@ public class MainActivity extends FragmentActivity {
              * 响应哪个action
              * 如果有多个action接收用 if (intent.getAction().equals("?"))
              */
-            System.out.println("----->>>>接收到广播了,传过来的信息是:" + message);
+            Log.d("duobao", "----->>>>接收到广播了,传过来的信息是:" + message);
+
+            //获取fragment的管理者
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            //开启事物
+            FragmentTransaction beginTrasaction = fragmentManager.beginTransaction();
+            if (duobaofragment == null) {
+                duobaofragment = new Doubao_Fragment();
+                beginTrasaction.add(R.id.main_fragment, duobaofragment);
+            }
+            if (discoverFragment != null)
+                beginTrasaction.hide(discoverFragment);
+            if (listFragment != null)
+                beginTrasaction.hide(listFragment);
+            if (meFragment != null)
+                beginTrasaction.hide(meFragment);
+            beginTrasaction.show(duobaofragment);
+            beginTrasaction.commit();
         }
     }
 
@@ -127,7 +143,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                 //获取fragment的管理者
-                  FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 //开启事物
                 FragmentTransaction beginTrasaction = fragmentManager.beginTransaction();
 
@@ -136,48 +152,30 @@ public class MainActivity extends FragmentActivity {
                         if (duobaofragment == null) {
                             duobaofragment = new Doubao_Fragment();
                             beginTrasaction.add(R.id.main_fragment, duobaofragment);
-                            Log.d("peng","--->>>add-one");
+
                         }
-                        if (discoverFragment != null){
+                        if (discoverFragment != null)
                             beginTrasaction.hide(discoverFragment);
-                            Log.d("peng","--->>>hide-two");}
-                        if (listFragment != null){
+                        if (listFragment != null)
                             beginTrasaction.hide(listFragment);
-                            Log.d("peng","--->>>hide-three");}
-                        if (meFragment != null) {
+                        if (meFragment != null)
                             beginTrasaction.hide(meFragment);
-                            Log.d("peng","--->>>hide-four");
-                        }
                         beginTrasaction.show(duobaofragment);
-                        Log.d("peng","--->>>show-one");
                         beginTrasaction.commit();
-
-                        //beginTrasaction.replace(R.id.main_fragment, new Doubao_Fragment());
-
                         break;
                     case R.id.main_fx:
                         if (discoverFragment == null) {
                             discoverFragment = new Discover_Fragment();
                             beginTrasaction.add(R.id.main_fragment, discoverFragment);
-                            Log.d("peng","--->>>add-two");
                         }
-                        if (duobaofragment != null){
+                        if (duobaofragment != null)
                             beginTrasaction.hide(duobaofragment);
-                            Log.d("peng","--->>>hide-one");}
-                        if (listFragment != null){
+                        if (listFragment != null)
                             beginTrasaction.hide(listFragment);
-                            Log.d("peng","--->>>hide-three");
-                        }
-                        if (meFragment != null){
+                        if (meFragment != null)
                             beginTrasaction.hide(meFragment);
-                            Log.d("peng","--->>>hide-four");
-                        }
                         beginTrasaction.show(discoverFragment);
-                        Log.d("peng","--->>>show-two");
                         beginTrasaction.commit();
-
-                        //beginTrasaction.replace(R.id.main_fragment, new Discover_Fragment());
-
                         break;
                     case R.id.main_qd:
                         if (listFragment == null) {
@@ -192,8 +190,6 @@ public class MainActivity extends FragmentActivity {
                             beginTrasaction.hide(meFragment);
                         beginTrasaction.show(listFragment);
                         beginTrasaction.commit();
-
-                        //beginTrasaction.replace(R.id.main_fragment, new List_Fragment());
                         break;
                     case R.id.main_me:
 
@@ -209,12 +205,10 @@ public class MainActivity extends FragmentActivity {
                             beginTrasaction.hide(discoverFragment);
                         beginTrasaction.show(meFragment);
                         beginTrasaction.commit();
-                        //beginTrasaction.replace(R.id.main_fragment, new Me_Fragment());
                         break;
                     default:
                         break;
                 }
-                //beginTrasaction.commit();
             }
         });
     }
@@ -225,6 +219,7 @@ public class MainActivity extends FragmentActivity {
         onDoubleBackExist(keyCode, event);
         return true;
     }
+
     /**
      * 双击退出
      */

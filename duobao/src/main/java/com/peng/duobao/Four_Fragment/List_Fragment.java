@@ -39,7 +39,7 @@ public class List_Fragment extends Fragment {
                 Intent intent = new Intent("Four_Fragment");
                 intent.putExtra("peng","你好啊");
                 /*getActivity().sendOrderedBroadcast(intent,null,null,null,1,"习大大给每个村民发了1000大米了",null);*/
-                getActivity().sendOrderedBroadcast(intent,null);
+                getActivity().sendBroadcast(intent,null);
                 System.out.println("----------->>>发送了广播");
             }
         });

@@ -145,7 +145,6 @@ public class Doubao_Fragment extends Fragment {
                 FragmentManager goodsfragmentManager = getChildFragmentManager();
                 FragmentTransaction beginTrasaction = goodsfragmentManager.beginTransaction();
 
-
                 switch (checkedId) {
                     case R.id.rb_goods_one:
                         if (onefragment == null) {
@@ -306,7 +305,7 @@ public class Doubao_Fragment extends Fragment {
      */
     private void startPlay() {
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 2, 5, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 4, 5, TimeUnit.SECONDS);
         //根据他的参数说明，第一个参数是执行的任务，第二个参数是第一次执行的间隔，第三个参数是执行任务的周期；
     }
 

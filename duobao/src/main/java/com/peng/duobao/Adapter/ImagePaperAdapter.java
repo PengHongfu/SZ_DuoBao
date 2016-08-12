@@ -68,8 +68,6 @@ public class ImagePaperAdapter extends PagerAdapter {
                 Toast.makeText(MainActivity.mainActivity,"你点击的是第"+position+"个页面",Toast.LENGTH_SHORT).show();
             }
         });
-
-
         (container).addView(viewList.get(position));
         return view;
     }
