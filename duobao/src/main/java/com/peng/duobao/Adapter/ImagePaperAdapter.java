@@ -52,11 +52,18 @@ public class ImagePaperAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
+
         View view = viewList.get(position);
         //ViewParent viewParent = view.getParent();
         ImageView imageView = (ImageView) view.findViewById(R.id.img);
 
-        Glide.with(context).load(list.get(position)).into(imageView);
+        Glide.with(context)
+                .load(list.get(position))
+                .placeholder(R.color.colorEEEEE)
+                .error(R.drawable.img_default)
+                .fitCenter()
+                .into(imageView)
+                ;
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

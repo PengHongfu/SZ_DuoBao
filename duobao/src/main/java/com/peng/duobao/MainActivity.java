@@ -52,7 +52,6 @@ public class MainActivity extends FragmentActivity {
     private List_Fragment listFragment;
     private Me_Fragment meFragment;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mainActivity = this;
@@ -60,6 +59,11 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
 
+        reciverguanbo();
+        inintView();
+    }
+
+    private void reciverguanbo() {
         /**
          * 动态注册广播接收者
          * 静态要在清单文件里配置
@@ -71,8 +75,6 @@ public class MainActivity extends FragmentActivity {
          *filter.addAction("jdfkljsl");
          */
         registerReceiver(reciver, filter);
-
-        inintView();
     }
 
     @Override

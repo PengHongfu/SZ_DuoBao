@@ -50,9 +50,11 @@ public class MyListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
+            //viewHolder一定要new出来
             viewHolder = new ViewHolder();
 
             convertView = View.inflate(mContext, R.layout.goods_two_item, null);
+
             viewHolder.image = (ImageView) convertView.findViewById(R.id.iv_goods_img);
             viewHolder.title = (TextView) convertView.findViewById(R.id.tv_goods_name);
             viewHolder.progress = (ProgressBar) convertView.findViewById(R.id.tv_goods_progress);
@@ -61,9 +63,9 @@ public class MyListAdapter extends BaseAdapter {
             viewHolder.buy = (Button) convertView.findViewById(R.id.bt_goods_buy);
 
             convertView.setTag(viewHolder);
-        }
-        {
+        }else {
             viewHolder = (ViewHolder) convertView.getTag();
+        }
 
             //设置ProgressBar为可见状态
             viewHolder.progress.setVisibility(View.VISIBLE);
@@ -73,8 +75,12 @@ public class MyListAdapter extends BaseAdapter {
             //设置ProgressBar当前值
             viewHolder.progress.setProgress(progress[position]);
             viewHolder.price.setText("1000coin");
-            Glide.with(mContext).load(url[position]).into(viewHolder.image);
-        }
+            Glide.with(mContext)
+                    .load(url[position])
+                    .placeholder(R.color.colorEEEEE)
+                    .error(R.drawable.img_blank)
+                    .fitCenter()
+                    .into(viewHolder.image);
 
         return convertView;
     }

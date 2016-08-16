@@ -22,6 +22,7 @@
     <color name="colorBlack6">#333333</color>
     <color name="color_transparent">#00000000</color>
     <color name="colorGrey">#9B9B9B</color>
+    <color name="colorEEEEE">#EEEEEE</color>#EEEEEE
     <color name="color_grey">#E2E2E2</color>
     <color name="color_grey2">#BFBFBF</color>
     <color name="color_grey3">#C0C0C0</color>

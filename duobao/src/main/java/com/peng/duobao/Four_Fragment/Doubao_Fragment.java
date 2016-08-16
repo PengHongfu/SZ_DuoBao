@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 
 import com.peng.duobao.Adapter.ImagePaperAdapter;
 import com.peng.duobao.Goods_Fragement.Goods_four_Fragment;
@@ -75,7 +77,6 @@ public class Doubao_Fragment extends Fragment {
     private Goods_four_Fragment fourfragment;
     private RadioGroup goodsRG;
 
-
     private Handler handler = new Handler() {
 
         @Override
@@ -87,6 +88,11 @@ public class Doubao_Fragment extends Fragment {
             }
         }
     };
+    private RadioGroup jing;
+    private RadioGroup dong;
+    private ScrollView sv;
+    int[] location = new int[2];
+    int[] location2 = new int[2];
 
 
     @Nullable
@@ -111,8 +117,81 @@ public class Doubao_Fragment extends Fragment {
         }
 
         goodsFragmentinitView();
-
+        refresh();
+        test();
         return view;
+    }
+
+    private void test() {
+        dong = (RadioGroup) view.findViewById(R.id.goods_list_rg);
+        jing = (RadioGroup) view.findViewById(R.id.goods_list_rg1);
+        sv = (ScrollView) view.findViewById(R.id.scrollView);
+        jing.setVisibility(View.GONE);
+
+        sv.setOnTouchListener(new View.OnTouchListener() {
+            private int lastY = 0;
+            private int touchEventId = -9983761;
+
+            Handler handler = new Handler() {
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+
+                    if (msg.what == touchEventId) {
+                        if (lastY != sv.getScrollY()) {
+                            //scrollview一直在滚动，会触发
+                            handler.sendMessageDelayed(
+                                    handler.obtainMessage(touchEventId, sv),5);
+                            lastY = sv.getScrollY();
+                            dong.getLocationOnScreen(location);
+                            jing.getLocationOnScreen(location2);
+                            //动的到静的位置时，静的显示。动的实际上还是网上滚动，但我们看到的是静止的那个
+                            if (location[1] <= location2[1]) {
+                                jing.setVisibility(View.VISIBLE);
+                            } else {
+                                //静止的隐藏了
+                                jing.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+            };
+            public boolean onTouch(View v, MotionEvent event) {
+                //必须两个都搞上，不然会有瑕疵。
+                //没有这段，手指按住拖动的时候没有效果
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    handler.sendMessageDelayed(
+                            handler.obtainMessage(touchEventId, v), 5);
+                }
+                //没有这段，手指松开scroll继续滚动的时候，没有效果
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    handler.sendMessageDelayed(
+                            handler.obtainMessage(touchEventId, v), 5);
+                }
+                return false;
+            }
+        });
+    }
+
+    private void refresh() {
+        final SwipeRefreshLayout refresh = (SwipeRefreshLayout) view.findViewById(R.id.sr_refresh);
+        refresh.setColorSchemeResources(android.R.color.holo_blue_light,
+                android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (!Thread.currentThread().isInterrupted()) {
+                                Thread.currentThread().interrupt();
+                        // 使用postInvalidate可以直接在线程中更新界面
+                            view.postInvalidate();
+                        }
+                        refresh.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
     }
 
     /**
@@ -233,7 +312,8 @@ public class Doubao_Fragment extends Fragment {
          */
         dotViewList = new ArrayList<ImageView>();
         list = new ArrayList<>();
-        catesViewList = new ArrayList<>();
+
+
         list.add(url1);
         list.add(url2);
         list.add(url3);
@@ -279,6 +359,7 @@ public class Doubao_Fragment extends Fragment {
         /**
          * 取到scroll_vew_item布局里的ImageView
          */
+        catesViewList = new ArrayList<>();
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
 
@@ -382,7 +463,7 @@ public class Doubao_Fragment extends Fragment {
         }
 
     }
-    
+
     @Override
     public void onAttach(Context context) {
         System.out.println("onAttach");
